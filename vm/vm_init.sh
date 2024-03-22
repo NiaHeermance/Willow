@@ -35,7 +35,10 @@ psql -U willow_user -h 127.0.0.1 willow < setup.sql
 
 # Allow login of main linux user into server
 cd /etc/postgresql/*/main/
-sed -i '101 ahost willow willow_user 127.0.0.1/32 md' pg_hba.conf
+sed -i '101 ahost   willow      willow_user     127.0.0.1/32    md5' pg_hba.conf
+
+# Start up server automatically upon reboot
+sudo systemctl enable postgresql
 
 # Set up testing suite
 npx ts-jest config:init
