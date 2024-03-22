@@ -6,7 +6,7 @@ SERVER_DIRECTORY="$SHARED_DIRECTORY/../Server"
 
 # Allowing shared folder on boot.
 echo vboxsf >> /etc/modules
-echo "Willow $SHARED_DIRECTORY rw      0       0" >> /etc/fstab
+echo "Willow $SHARED_DIRECTORY vboxsf defaults      0       0" >> /etc/fstab
 # Used for just this session.
 mount -t vboxsf Willow $SHARED_DIRECTORY
 
