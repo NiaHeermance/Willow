@@ -8,6 +8,7 @@ import {
 	OrStatement,
 	UniversalStatement,
 	ExistenceStatement,
+	identityStatement
 } from './statement';
 import {Formula} from './formula';
 
@@ -314,6 +315,7 @@ export class PropositionalLogicParser extends Parser<Statement> {
 		and: ['∧', '&', 'and'],
 		or: ['∨', '|', 'or'],
 		not: ['¬', '!', '~', 'not'],
+		identity: ['=', 'equals'],
 	};
 
 	start(): Statement {
