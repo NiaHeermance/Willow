@@ -43,4 +43,12 @@ sudo systemctl enable postgresql
 # Set up testing suite
 npx ts-jest config:init
 
+# Copy configuration
+cd $SERVER_DIRECTORY
+cp .env.template .env
+sed -i "s/PGPASSWORD=null/PGPASSWORD=willowy/1" .env
+sed -i "s/SESSION_SECRET=/SESSION_SECRET=buffalo/1" .env
+cp "$SERVER_DIRECTORY/config.yml.template" config.yml
+cd $SHARED_DIRECTORY
+
 source $SHARED_DIRECTORY/vm/vm_start.sh

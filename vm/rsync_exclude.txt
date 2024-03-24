@@ -5,3 +5,5 @@ js/settings.js
 js/theme.js
 js/toolbar.js
 src/types/routes/
+config.yml
+.env
