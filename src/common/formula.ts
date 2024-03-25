@@ -148,6 +148,35 @@ export class Formula {
 	}
 }
 
+export class IdentityPredicate extends Formula {
+	/**
+	 * Constructs a new identity formula
+	 * @param args the arguments for this identity. Should be 2.
+	 */
+	constructor(
+		name: string,
+		args: Formula[] | null = null
+	) {
+		super("=", args, true)
+		this.name = name;
+		this.args = args;
+		this.isPredicate = isPredicate;
+	}
+
+	/**
+	 * Converts this statement to a string.
+	 * Overridden as identity is infix notation.
+	 * @returns the string representation of this statement
+	 */
+	toString(): string {
+		if this.args.length !== 2 {
+			return "";
+		}
+		return `${this.args[0]} = ${this.args[1]}`;
+	}
+
+}
+
 class FormulaEquivalenceEvaluator {
 	lhs: Formula;
 	rhs: Formula;
