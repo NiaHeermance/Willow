@@ -148,7 +148,7 @@ export class Formula {
 	}
 }
 
-export class IdentityPredicate extends Formula {
+export class IdentityFormula extends Formula {
 	/**
 	 * Constructs a new identity formula
 	 * @param args the arguments for this identity. Should be 2.

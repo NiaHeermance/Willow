@@ -1,4 +1,4 @@
-import {Formula, REPLACEMENT_SYMBOL} from './formula';
+import {Formula, IdentityFormula, REPLACEMENT_SYMBOL} from './formula';
 import {AssignmentMap} from './util';
 
 export abstract class Statement {
@@ -208,6 +208,25 @@ export class AtomicStatement extends Statement {
 	toString() {
 		return this.formula.toString();
 	}
+}
+
+export class IdentityStatement extends AtomicStatement {
+	/**
+	 * Constructs a new IdentityStatement, which is represented by an IdentityFormula.
+	 * @param formula the formula representing this statement
+	 */
+	constructor(formula: IdentityFormula) {
+		super(formula);
+	}
+
+	decompose(): Statement[][] {
+		return [];
+	}
+
+	toString() {
+		return this.formula.toString();
+	}
+
 }
 
 export abstract class UnaryStatement extends Statement {
