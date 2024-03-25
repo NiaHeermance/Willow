@@ -7,3 +7,4 @@ js/toolbar.js
 src/types/routes/
 config.yml
 .env
+logs/
