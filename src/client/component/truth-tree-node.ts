@@ -71,6 +71,9 @@ export const TruthTreeNodeComponent = defineComponent({
 				beforeCursor = beforeCursor?.replace(text, symbol);
 				afterCursor = afterCursor?.replace(text, symbol);
 			}
+			if (beforeCursor.length > 1 && beforeCursor.endsWith('=') && beforeCursor[beforeCursor.length-2] !== ' ') {
+				beforeCursor = beforeCursor.replace('=', ' = ');
+			}
 			this.node.text = beforeCursor + afterCursor;
 
 			cursor = beforeCursor?.length ?? 0;
