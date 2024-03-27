@@ -680,7 +680,7 @@ export class FirstOrderLogicParser extends PropositionalLogicParser {
 		}
 		rightSymbol = new Formula(rightSymbol);
 
-		const identity_formula = new IdentityFormula(leftSymbol, rightSymbol);
-		return new IdentityStatement(identity_formula);
+		const identityFormula = new IdentityFormula(leftSymbol, rightSymbol);
+		return new IdentityStatement(identityFormula);
 	}
 }
