@@ -7,6 +7,7 @@ import {
 	QuantifierStatement,
 	ExistenceStatement,
 	UniversalStatement,
+	IdentityStatement,
 } from './statement';
 import {
 	deleteMapping,
@@ -107,6 +108,7 @@ export class TruthTreeNode {
 	private _text = '';
 	private _statement: Statement | null = null;
 	premise = false;
+	reflexiveIdentity = false;
 	comment: string | null = null;
 
 	tree: TruthTree;
@@ -555,6 +557,15 @@ export class TruthTreeNode {
 		return TruthTree.CLOSED_TERMINATOR === this.text.trim();
 	}
 
+	determineIfReflexiveIdentity() {
+		if (this.statement instanceof IdentityStatement && this.statement.isReflexiveIdentity()) {
+			this.reflexiveIdentity = true;
+		}
+		else {
+			this.reflexiveIdentity = false;
+		}
+	}
+
 	/**
 	 * Determines whether or not this statement is valid; i.e., it is a logical
 	 * consequence of some other statement in the truth tree.
@@ -584,8 +595,10 @@ export class TruthTreeNode {
 			return new CorrectnessError('not_parsable');
 		}
 
-		if (this.premise) {
-			// Premises are always valid
+		this.determineIfReflexiveIdentity();
+
+		if (this.premise || this.reflexiveIdentity) {
+			// Premises and a=a statements are always valid
 			return true;
 		}
 
@@ -937,6 +950,10 @@ export class TruthTreeNode {
 
 		if (this.premise) {
 			return 'This statement is a premise.';
+		}
+
+		if (this.reflexiveIdentity) {
+			return 'This statement is an identity.'
 		}
 
 		if (this.isTerminator()) {

@@ -223,6 +223,13 @@ export class IdentityStatement extends AtomicStatement {
 		return [];
 	}
 
+	isReflexiveIdentity(): boolean {
+		if (this.formula.args![0].equals(this.formula.args![1])) {
+			return true;
+		}
+		return false;
+	}
+
 	toString() {
 		return this.formula.toString();
 	}
