@@ -549,7 +549,7 @@ export class FirstOrderLogicParser extends PropositionalLogicParser {
 	};
 
 	unaryExpression(): Statement {
-		const left_symbol = this.maybeMatch('symbolNameRequired');
+		const left_symbol = this.maybeMatch('nonNullSymbolName');
 		if (left_symbol !== null) {
 			// identity statement
 			return this.identityStatement(new Formula(left_symbol));
@@ -650,7 +650,7 @@ export class FirstOrderLogicParser extends PropositionalLogicParser {
 		return [new Formula(head), ...tail];
 	}
 
-	symbolNameRequired(): string {
+	nonNullSymbolName(): string {
 		const symbol = this.match("symbolName");
 		if (symbol === null) {
 			throw new ParseError(
@@ -671,7 +671,7 @@ export class FirstOrderLogicParser extends PropositionalLogicParser {
 			);
 		}
 
-		let rightSymbol = this.match('symbolNameRequired');
+		let rightSymbol = this.match('nonNullSymbolName');
 		if (rightSymbol === null) {
 			throw new ParseError(
 				this.position,
