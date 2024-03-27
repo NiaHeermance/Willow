@@ -149,28 +149,23 @@ export class Formula {
 }
 
 export class IdentityFormula extends Formula {
-	lhs: Formula;
-	rhs: Formula;
 	/**
 	 * Constructs a new identity formula
 	 * @param lhs left side of the equal sign.
 	 * @param rhs right side of the equal sign.
 	 */
 	constructor(lhs: Formula, rhs: Formula) {
-		super("=", [lhs, rhs], true)
-		this.lhs = lhs;
-		this.rhs = rhs;
+		super("=", [lhs, rhs], true);
 	}
 
 	/**
 	 * Converts this statement to a string.
-	 * Overridden as identity is infix notation.
+	 * Overridden because identity is infix notation.
 	 * @returns the string representation of this statement
 	 */
 	toString(): string {
-		return `${this.lhs} = ${this.rhs}`;
+		return `${this.args![0]} = ${this.args![1]}`;
 	}
-
 }
 
 class FormulaEquivalenceEvaluator {
