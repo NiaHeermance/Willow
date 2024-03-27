@@ -10,7 +10,7 @@ import {
 	ExistenceStatement,
 	IdentityStatement,
 } from './statement';
-import {Formula} from './formula';
+import {Formula, IdentityFormula} from './formula';
 
 /**
  * An error that occurs when parsing an expression.
@@ -279,7 +279,7 @@ abstract class Parser<T> {
 	 * @param rules the list of rules to match to
 	 * @returns the text matched or null if no match
 	 */
-	maybeMatch(...rules: string[]): T | null {
+	maybeMatch(...rules: string[]) {
 		try {
 			return this.match(...rules);
 		} catch (e) {
@@ -549,7 +549,11 @@ export class FirstOrderLogicParser extends PropositionalLogicParser {
 	};
 
 	unaryExpression(): Statement {
-		if (this.maybeKeyword(...FirstOrderLogicParser.OPERATORS['not'])) {
+		const left_symbol = this.maybeMatch('symbolNameRequired');
+		if (left_symbol !== null) {
+			// identity statement
+			return this.identityStatement(new Formula(left_symbol));
+		} else if (this.maybeKeyword(...FirstOrderLogicParser.OPERATORS['not'])) {
 			// not statement
 			const notStatement = this.match('unaryExpression');
 
@@ -644,5 +648,39 @@ export class FirstOrderLogicParser extends PropositionalLogicParser {
 		const tail = this.match('symbolNameListTail');
 
 		return [new Formula(head), ...tail];
+	}
+
+	symbolNameRequired(): string {
+		const symbol = this.match("symbolName");
+		if (symbol === null) {
+			throw new ParseError(
+				this.position,
+				`Expected lowercase letter for symbol start but got ${this.text[this.position]}.`
+			);
+		}
+
+		return symbol;
+	}
+
+	identityStatement(leftSymbol: Formula): IdentityStatement {
+		const sign = this.maybeKeyword(...FirstOrderLogicParser.OPERATORS['equals']);
+		if (sign === null) {
+			throw new ParseError(
+				this.position,
+				`Expected equal sign but got isolated variable.`
+			);
+		}
+
+		let rightSymbol = this.match('symbolNameRequired');
+		if (rightSymbol === null) {
+			throw new ParseError(
+				this.position,
+				`Expected sign but got isolated variable.`
+			);
+		}
+		rightSymbol = new Formula(rightSymbol);
+
+		const identity_formula = new IdentityFormula(leftSymbol, rightSymbol);
+		return new IdentityStatement(identity_formula);
 	}
 }

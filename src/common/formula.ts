@@ -149,18 +149,17 @@ export class Formula {
 }
 
 export class IdentityFormula extends Formula {
+	lhs: Formula;
+	rhs: Formula;
 	/**
 	 * Constructs a new identity formula
-	 * @param args the arguments for this identity. Should be 2.
+	 * @param lhs left side of the equal sign.
+	 * @param rhs right side of the equal sign.
 	 */
-	constructor(
-		name: string,
-		args: Formula[] | null = null
-	) {
-		super("=", args, true)
-		this.name = name;
-		this.args = args;
-		this.isPredicate = isPredicate;
+	constructor(lhs: Formula, rhs: Formula) {
+		super("=", [lhs, rhs], true)
+		this.lhs = lhs;
+		this.rhs = rhs;
 	}
 
 	/**
@@ -169,10 +168,7 @@ export class IdentityFormula extends Formula {
 	 * @returns the string representation of this statement
 	 */
 	toString(): string {
-		if this.args.length !== 2 {
-			return "";
-		}
-		return `${this.args[0]} = ${this.args[1]}`;
+		return `${this.lhs} = ${this.rhs}`;
 	}
 
 }
