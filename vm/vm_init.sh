@@ -8,7 +8,7 @@ SERVER_DIRECTORY="$SHARED_DIRECTORY/../Server"
 echo vboxsf >> /etc/modules
 echo "Willow $SHARED_DIRECTORY vboxsf defaults      0       0" >> /etc/fstab
 # Used for just this session.
-mount -t vboxsf Willow $SHARED_DIRECTORY
+# mount -t vboxsf Willow $SHARED_DIRECTORY
 
 # # Actual directory server is run on.
 cp -R $SHARED_DIRECTORY $SERVER_DIRECTORY
